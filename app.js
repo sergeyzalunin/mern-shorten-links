@@ -1,3 +1,5 @@
+'use strict'
+
 const express = require('express')
 const config = require('config')
 const mongoose = require('mongoose')
@@ -11,13 +13,20 @@ const PORT = config.get('port') || 5000
 
 async function start() {
     try {
-        await mongoose.connect(config.get('mongoUri'), {
+        let mongoUri = 'mongodb+srv://ninja:1234d@cluster0-ccye3.azure.mongodb.net/test?retryWrites=true&w=majority'//config.get('mongoUri')
+        console.log('mongo uri', mongoUri)
+
+        await mongoose.connect(mongoUri, {
             useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useCreateIndex: true
-        })
+            //useUnifiedTopology: true,
+            useCreateIndex: true,
+            reconnectTries: 100,
+            reconnectInterval: 500,
+            autoReconnect: true,
+            dbName: 'test'
+        }) .catch(err => console.log('Mongo connection error: ', err));
     } catch (e) {
-        console.log('Server error', e.message)
+        console.log('Server error:', e.message)
         process.exit(1)
     }
 }

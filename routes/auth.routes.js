@@ -16,30 +16,34 @@ router.post(
     ],
     async (req, res) => {
     try {
+        console.log('Body:', req.body)
+
         const errors = validationResult(req)
+        
         if (!errors.isEmpty()) {
             return res.status(400).json({
                 errors: errors.array(),
                 message: 'Wrong registration data'
             })
         }
-
         
-        const {email, password} = req.Body
+        const {email, password} = req.body
         const candidate = await User.findOne({ email })
 
         if (candidate) {
             res.status(400).json({ message: 'Such user already exists'})
         }
 
-        const hashedPassword = bcrypt.hash(password, 12)
+        const hashedPassword = await bcrypt.hash(password, 12)
+        console.log('hashedpassowr: ', hashedPassword)
         const user = new User({ email, password: hashedPassword })
         await user.save()
 
         res.status(201).json({ message: 'User is created'})
 
     } catch (e) {
-        res.status(500).json({message: 'Somthing went wrong, try again'})
+        console.log('REGISTRATION: ', e)
+        res.status(500).json({message: 'Something went wrong, try again'})
     }
 })
 
@@ -50,7 +54,8 @@ router.post(
         check('email', 'Wrong email').normalizeEmail().isEmail(),
         check('password', `Password hasn't to be emty`).exists()
     ],
-    async (reg, res) => {
+    async (req, res) => {
+
     try {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
@@ -60,7 +65,7 @@ router.post(
             })
         }
 
-        const {email, password} = req.Body
+        const {email, password} = req.body
 
         const user = await User.findOne({ email })
 
@@ -84,6 +89,7 @@ router.post(
         res.json({ token, userId: user.id })
 
     } catch (e) {
+        console.log('LOGIN: ', e)
         res.status(500).json({message: 'Somthing went wrong, try again'})
     }
 })
