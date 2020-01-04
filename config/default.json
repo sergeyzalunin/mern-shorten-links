@@ -1,5 +1,5 @@
 {
     "port": 5000,
-    "jwtSeret": "mern youtube course",
+    "jwtSecret": "mern youtube course",
     "mongoUri": "mongodb+srv://ninja:1234d@cluster0-ccye3.azure.mongodb.net/test?retryWrites=true&w=majority"
 }
