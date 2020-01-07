@@ -33,7 +33,7 @@ router.post('/generate', auth, async (req, res) => {
     }
 })
 
-router.post('/', auth, async (req, res) => {
+router.get('/', auth, async (req, res) => {
     try {
         const links = await Link.find({ owner: req.user.userId })
         res.json(links)
@@ -43,7 +43,8 @@ router.post('/', auth, async (req, res) => {
     }
 })
 
-router.post('/:id', auth, async (req, res) => {
+router.get('/:id', auth, async (req, res) => {
+        console.log('LOGIN: ')
     try {
         const links = await Link.findById(req.params.id)
         res.json(links)        

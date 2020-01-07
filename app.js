@@ -1,4 +1,4 @@
-//'use strict'
+'use strict'
 
 const express = require('express')
 const config = require('config')
@@ -14,7 +14,7 @@ const PORT = config.get('port') || 5000
 
 async function start() {
     try {
-        let mongoUri = config.get('mongoUri')//'mongodb+srv://ninja:1234d@cluster0-ccye3.azure.mongodb.net/test?retryWrites=true&w=majority'//config.get('mongoUri')
+        let mongoUri = 'mongodb+srv://ninja:1234d@cluster0-ccye3.azure.mongodb.net/test?retryWrites=true&w=majority'//config.get('mongoUri')
         console.log('mongo uri', mongoUri)
 
         await mongoose.connect(mongoUri, {
