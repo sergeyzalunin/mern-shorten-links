@@ -1,4 +1,4 @@
-'use strict'
+//'use strict'
 
 const express = require('express')
 const config = require('config')
@@ -8,12 +8,13 @@ const app = express()
 
 app.use(express.json({ extended: true }))
 app.use('/api/auth', require('./routes/auth.routes'))
+app.use('/api/link', require('./routes/link.routes'))
 
 const PORT = config.get('port') || 5000
 
 async function start() {
     try {
-        let mongoUri = 'mongodb+srv://ninja:1234d@cluster0-ccye3.azure.mongodb.net/test?retryWrites=true&w=majority'//config.get('mongoUri')
+        let mongoUri = config.get('mongoUri')//'mongodb+srv://ninja:1234d@cluster0-ccye3.azure.mongodb.net/test?retryWrites=true&w=majority'//config.get('mongoUri')
         console.log('mongo uri', mongoUri)
 
         await mongoose.connect(mongoUri, {
@@ -26,7 +27,7 @@ async function start() {
             dbName: 'test'
         }) .catch(err => console.log('Mongo connection error: ', err));
     } catch (e) {
-        console.log('Server error:', e.message)
+        console.error('Server error:', e);
         process.exit(1)
     }
 }
