@@ -29,7 +29,7 @@ router.post('/generate', auth, async (req, res) => {
         res.status(201).json({ link })
     } catch (e) {
         console.log('LOGIN: ', e)
-        res.status(500).json({message: 'Somthing went wrong, try again'})
+        res.status(500).json({message: 'Something went wrong, try again'})
     }
 })
 
@@ -39,7 +39,7 @@ router.get('/', auth, async (req, res) => {
         res.json(links)
     } catch (e) {
         console.log('LOGIN: ', e)
-        res.status(500).json({message: 'Somthing went wrong, try again'})
+        res.status(500).json({message: 'Something went wrong, try again'})
     }
 })
 
@@ -50,7 +50,7 @@ router.get('/:id', auth, async (req, res) => {
         res.json(links)        
     } catch (e) {
         console.log('LOGIN: ', e)
-        res.status(500).json({message: 'Somthing went wrong, try again'})
+        res.status(500).json({message: 'Something went wrong, try again'})
     }
 })
 
